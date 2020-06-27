@@ -1,0 +1,28 @@
+{
+    "name": "weather-app",
+    "version": "1.0.0",
+    "description": "Provides up-to-date forecast of current location",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "devStart": "nodemon server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Kevin-Luk-Hub/weather-app.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Kevin-Luk-Hub/weather-app/issues"
+    },
+    "homepage": "https://github.com/Kevin-Luk-Hub/weather-app#readme",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "dotenv": "^8.2.0",
+        "nodemon": "^2.0.4"
+    }
+}
