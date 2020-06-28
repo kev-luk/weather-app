@@ -9,10 +9,10 @@ const descriptionElement = document.querySelector('.temperature-description p');
 const locationElementElement = document.querySelector('.location p');
 
 // weather object
-var weather = {};
-
-weather.temperature = {
-    unit: 'celsius',
+var weather = {
+    temperature: {
+        unit: 'celsius',
+    },
 };
 
 //convert fahrenheit to celsius
@@ -57,6 +57,13 @@ function capitalizeEachWord(str) {
     return words.join(' ');
 }
 
+function displayWeather() {
+    iconElement.innerHTML = `<img src= "icons/${weather.iconID}.img">`;
+    temperatureElement.innerHTML = `${weather.temperature.value}° <span>C</span>`;
+    descriptionElement.innerHTML = weather.description;
+    locationElementElement.innerHTML = `${weather.city}, ${weather.country}`;
+}
+
 // getting user location
 navigator.geolocation.getCurrentPosition((position) => {
     fetch('/weather', {
@@ -84,10 +91,3 @@ navigator.geolocation.getCurrentPosition((position) => {
             displayWeather();
         });
 }, errorMessage);
-
-function displayWeather() {
-    iconElement.innerHTML = `<img src= "icons/${weather.iconID}.img">`;
-    temperatureElement.innerHTML = `${weather.temperature.value}° <span>C</span>`;
-    descriptionElement.innerHTML = weather.description;
-    locationElementElement.innerHTML = `${weather.city}, ${weather.country}`;
-}
