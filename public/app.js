@@ -47,6 +47,17 @@ function errorMessage(error) {
     notification.innerHTML = `<p> ${error.message} </p>`;
 }
 
+function capitalizeEachWord(str) {
+    const words = [];
+
+    for (let word of str.split(' ')) {
+        words.push(word[0].toUpperCase() + word.slice(1));
+    }
+
+    return words.join(' ');
+}
+
+// getting user location
 navigator.geolocation.getCurrentPosition((position) => {
     fetch('/weather', {
         method: 'POST',
@@ -61,6 +72,22 @@ navigator.geolocation.getCurrentPosition((position) => {
     })
         .then((res) => res.json())
         .then((data) => {
-            setWeatherData(data, place.formatted_address);
+            weather.city = data.name;
+            weather.country = data.sys.country;
+            weather.temperature.value = Math.floor(data.main.temp - KELVIN);
+            weather.description = capitalizeEachWord(
+                data.weather[0].description
+            );
+            weather.iconID = data.weather[0].icon;
+        })
+        .then(() => {
+            displayWeather();
         });
 }, errorMessage);
+
+function displayWeather() {
+    iconElement.innerHTML = `<img src= "icons/${weather.iconID}.img">`;
+    temperatureElement.innerHTML = `${weather.temperature.value}° <span>C</span>`;
+    descriptionElement.innerHTML = weather.description;
+    locationElementElement.innerHTML = `${weather.city}, ${weather.country}`;
+}
