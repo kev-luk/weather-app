@@ -30,7 +30,7 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: #ededed;
+    background: #ffffff;
     color: #242424;
     display: flex;
     justify-content: center;
@@ -81,6 +81,16 @@ body {
     cursor: pointer;
     transition: all 0.3s ease 0s;
     opacity: 0.7;
+}
+
+.search-bar {
+    text-align: center;
+    margin-top: 1em;
+    font-size: 2rem;
+    border: 2px solid #777;
+    border-radius: 20px;
+    padding: 0.5em 1em;
+    outline: none;
 }
 
 .reference-api {
