@@ -7,6 +7,8 @@ const iconElement = document.querySelector('.weather-icon');
 const temperatureElement = document.querySelector('.temperature-value p');
 const descriptionElement = document.querySelector('.temperature-description p');
 const locationElementElement = document.querySelector('.location p');
+const searchBarElement = document.querySelector('.search-bar');
+const searchBoxElement = new google.maps.places.SearchBox(searchBarElement);
 
 // weather object
 var weather = {
@@ -91,3 +93,35 @@ navigator.geolocation.getCurrentPosition((position) => {
             displayWeather();
         });
 }, errorMessage);
+
+// retrieve location from google places APi
+searchBoxElement.addListener('places_changed', () => {
+    const location = searchBoxElement.getPlaces()[0];
+
+    if (location == null) return;
+
+    fetch('/weather', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify({
+            latitude: location.geometry.location.lat(),
+            longitude: location.geometry.location.lng(),
+        }),
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            weather.city = data.name;
+            weather.country = data.sys.country;
+            weather.temperature.value = Math.floor(data.main.temp - KELVIN);
+            weather.description = capitalizeEachWord(
+                data.weather[0].description
+            );
+            weather.iconID = data.weather[0].icon;
+        })
+        .then(() => {
+            displayWeather();
+        });
+});
