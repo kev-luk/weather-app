@@ -44,11 +44,6 @@ temperatureElement.addEventListener('click', () => {
     }
 });
 
-function errorMessage(error) {
-    notification.style.display = 'block';
-    notification.innerHTML = `<p> ${error.message} </p>`;
-}
-
 function capitalizeEachWord(str) {
     const words = [];
 
@@ -81,18 +76,20 @@ navigator.geolocation.getCurrentPosition((position) => {
     })
         .then((res) => res.json())
         .then((data) => {
+            let latitude = data.coord.lat;
+            let longitude = data.coord.lon;
             weather.city = data.name;
             weather.country = data.sys.country;
+            let placeName = `${data.name}, ${data.sys.country}`;
             weather.temperature.value = Math.floor(data.main.temp - KELVIN);
             weather.description = capitalizeEachWord(
                 data.weather[0].description
             );
             weather.iconID = data.weather[0].icon;
-        })
-        .then(() => {
             displayWeather();
+            initMap(latitude, longitude, placeName);
         });
-}, errorMessage);
+});
 
 // retrieve location from google places APi
 searchBoxElement.addListener('places_changed', () => {
@@ -113,15 +110,38 @@ searchBoxElement.addListener('places_changed', () => {
     })
         .then((res) => res.json())
         .then((data) => {
+            let latitude = data.coord.lat;
+            let longitude = data.coord.lon;
             weather.city = data.name;
             weather.country = data.sys.country;
+            let placeName = `${data.name}, ${data.sys.country}`;
             weather.temperature.value = Math.floor(data.main.temp - KELVIN);
             weather.description = capitalizeEachWord(
                 data.weather[0].description
             );
             weather.iconID = data.weather[0].icon;
-        })
-        .then(() => {
             displayWeather();
+            initMap(latitude, longitude, placeName);
         });
 });
+
+// create map with specified marker for current area
+function initMap(latitude, longitude, placeName) {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: latitude, lng: longitude },
+        zoom: 9,
+    });
+
+    var marker = new google.maps.Marker({
+        position: { lat: latitude, lng: longitude },
+        map: map,
+    });
+
+    var info = new google.maps.InfoWindow({
+        content: `<h3>${placeName}</h3>`,
+    });
+
+    marker.addListener('click', () => {
+        info.open(map, marker);
+    });
+}

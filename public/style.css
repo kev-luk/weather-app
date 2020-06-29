@@ -83,18 +83,7 @@ body {
     opacity: 0.7;
 }
 
-.search-bar {
-    text-align: center;
-    margin-top: 1em;
-    font-size: 1.5rem;
-    border: 2px solid #777;
-    border-radius: 20px;
-    padding: 0.5em 1.5em;
-    outline: none;
-}
-
 .reference-api {
-    margin-top: 2em;
     font-weight: 600;
 }
 
@@ -106,4 +95,21 @@ body {
 .reference-api a:hover {
     transition: all 0.3s ease 0s;
     opacity: 0.7;
+}
+
+.search-bar {
+    text-align: center;
+    margin-top: 1.5em;
+    font-size: 1.5rem;
+    border: 2px solid #777;
+    border-radius: 20px;
+    padding: 0.5em 1.5em;
+    outline: none;
+}
+
+.map-container {
+    margin: 2em 0em;
+    height: 20em;
+    width: 100%;
+    background-color: gray;
 }
