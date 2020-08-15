@@ -3,7 +3,7 @@ if (process.env.NODE_ENV != 'production') {
 }
 
 const API_KEY = process.env.API_KEY;
-
+const PORT = process.env.port || 3000;
 const express = require('express');
 const axios = require('axios');
 const { response } = require('express');
@@ -21,6 +21,6 @@ app.post('/weather', (req, res) => {
     }).then((data) => res.json(data.data));
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log('Successfully started server...');
 });
