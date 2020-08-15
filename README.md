@@ -1,5 +1,7 @@
 # Weather-app
 
+View this project at https://weather-map-location.herokuapp.com/
+
 Provides up-to-date forecast of current location
 
 Weather information provided by OpenWeather API: https://openweathermap.org/api
